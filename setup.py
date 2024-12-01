@@ -4,6 +4,20 @@ from setuptools import setup, find_packages
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
+def read_requirements(file_path):
+    """
+    Reads a requirements.txt file and returns a list of dependencies.
+
+    Args:
+        file_path (str): Path to the requirements.txt file.
+
+    Returns:
+        list: A list of dependencies as strings.
+    """
+    with open(file_path, 'r', encoding='utf-8') as f:
+        return [line.strip() for line in f if line.strip() and not line.startswith('#')]
+
+
 setup(
     name="SabiM-AI-Tools",  # Package name
     version="0.1.0",  # Initial version
@@ -26,12 +40,7 @@ setup(
     ],
     packages=find_packages(),  # Automatically find and include all Python packages in the directory
     python_requires=">=3.7",  # Minimum Python version required
-    install_requires=[  # Dependencies needed to install and run the package
-        "pandas",
-        "pybtex",
-        "google-generativeai",
-        "ollama"
-    ],
+    install_requires=read_requirements("requirements.txt"),  # Dependencies needed to install and run the package
     extras_require={  # Optional dependencies
         "dev": ["pytest", "black"],  # For development
         "docs": ["sphinx"],  # For generating documentation
