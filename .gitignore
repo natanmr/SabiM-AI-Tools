@@ -1,1 +1,2 @@
-./SabiM_AI_Tools.egg-info
+.gitignore
+.SabiM_AI_Tools.egg-info/
