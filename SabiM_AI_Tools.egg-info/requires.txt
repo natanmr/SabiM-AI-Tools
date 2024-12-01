@@ -1,9 +1,0 @@
-pandas
-pybtex
-
-[dev]
-pytest
-black
-
-[docs]
-sphinx
