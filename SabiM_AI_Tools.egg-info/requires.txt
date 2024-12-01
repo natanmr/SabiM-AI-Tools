@@ -1,0 +1,10 @@
+pandas
+pybtex
+google-generativeai
+
+[dev]
+pytest
+black
+
+[docs]
+sphinx

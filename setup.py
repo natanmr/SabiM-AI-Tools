@@ -28,7 +28,8 @@ setup(
     python_requires=">=3.7",  # Minimum Python version required
     install_requires=[  # Dependencies needed to install and run the package
         "pandas",
-        "pybtex"
+        "pybtex",
+        "google-generativeai"
     ],
     extras_require={  # Optional dependencies
         "dev": ["pytest", "black"],  # For development
