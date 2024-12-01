@@ -1,4 +1,4 @@
-pandas
-pybtex
-ollama
-google-generativeai
+pandas=2.2.3
+pybtex=0.24.0
+ollama=0.4.2 
+google-generativeai=0.8.3 
