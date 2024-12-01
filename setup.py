@@ -29,7 +29,8 @@ setup(
     install_requires=[  # Dependencies needed to install and run the package
         "pandas",
         "pybtex",
-        "google-generativeai"
+        "google-generativeai",
+        "ollama"
     ],
     extras_require={  # Optional dependencies
         "dev": ["pytest", "black"],  # For development
