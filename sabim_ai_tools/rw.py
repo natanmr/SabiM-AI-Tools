@@ -157,5 +157,5 @@ def json_utilities(task, path="./", file="Articles.json", **kwargs):
         with open(file_path, 'r') as f:
             content = json.load(f)
         return pd.DataFrame(content)
-
+    
     return

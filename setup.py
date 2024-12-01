@@ -27,7 +27,6 @@ setup(
     packages=find_packages(),  # Automatically find and include all Python packages in the directory
     python_requires=">=3.7",  # Minimum Python version required
     install_requires=[  # Dependencies needed to install and run the package
-        "os",
         "pandas",
         "pybtex"
     ],

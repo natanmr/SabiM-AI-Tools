@@ -1,4 +1,4 @@
-os
 pandas
 pybtex
 ollama
+google-generativeai
