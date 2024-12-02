@@ -1,7 +1,7 @@
 # __main__.py
 
 # Imports:
-from sabim_ai_tools.sabim_ai_tools import run_analysis
+from sabim_ai_tools.sabim_ai_tools import run_llm_analysis
 import argparse
 
 if __name__ == "__main__":
@@ -43,4 +43,4 @@ if __name__ == "__main__":
     # Parse the command-line arguments
     args = parser.parse_args()
 
-    run_analysis(activity = args.activity, file_path = args.file, model = args.model_type, api_key=args.key)
+    run_llm_analysis(activity = args.activity, file_path = args.file, model = args.model_type, api_key=args.key)
