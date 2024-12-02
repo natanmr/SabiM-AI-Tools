@@ -1,5 +1,18 @@
 
 
+def print_banner() -> None:
+    """
+    Prints the banner message for SabiM-AI-Tools.
+    """
+    banner = """
+#===========================================================================#
+# SabiM-AI-Tools  Copyright (C) 2024  Natan Moreira Regis                   #
+# This program comes with ABSOLUTELY NO WARRANTY; for details see LICENSE.  #
+# This is free software, and you are welcome to redistribute it             #
+# under certain conditions; see LICENSE file for details.                   #
+#===========================================================================#
+"""
+    print(banner, "\n")
 
 
 def main() -> None:
@@ -9,11 +22,6 @@ def main() -> None:
 
 if __name__ == "__main__":
 
-    print("#===========================================================================#")
-    print("SabiM-AI-Tools  Copyright (C) 2024  Natan Moreira Regis")
-    print("This program comes with ABSOLUTELY NO WARRANTY; for details see LICENSE file.")
-    print("This is free software, and you are welcome to redistribute it") 
-    print("under certain conditions; see  LICENSE file for details")
-    print("#===========================================================================#\n\n")
+    print_banner()
 
     main()
