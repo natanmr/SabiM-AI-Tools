@@ -14,6 +14,8 @@ def print_banner() -> None:
 """
     print(banner, "\n")
 
+    return None
+
 
 def main() -> None:
 
