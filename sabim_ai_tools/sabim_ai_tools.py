@@ -10,7 +10,7 @@ def read_bibfile(file_path):
 
 
 
-def run_analysis(file_path, model, api_key):
+def run_analysis(activity, file_path, model, api_key):
 
     print(  "#===========================================================================#\n"+
             "# SabiM-AI-Tools  Copyright (C) 2024  Natan Moreira Regis                   #\n"+
@@ -27,6 +27,6 @@ def run_analysis(file_path, model, api_key):
      
     # Analyse the data with LLMs and save them
 
-    
+
      
      
