@@ -8,12 +8,6 @@ if __name__ == "__main__":
 
     """
     Main function to parse command-line arguments and initiate the analysis of articles using LLM.
-
-    Parameters:
-    - None
-
-    Returns:
-    - None
     """
     # Initialize argument parser with program name and description
     parser = argparse.ArgumentParser(prog='ArticleAnalysisLLM',
