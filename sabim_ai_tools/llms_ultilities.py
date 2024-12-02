@@ -6,11 +6,41 @@ import json
 import re
 
 # Default prompt for title and abstracts of articles analysis
-prompt = {}
+prompt = {
+    'prompt_header': (
+        "You are an expert text processor and analyzer. Your task is to extract and categorize "
+        "information from an article into specific sections. The sections are as follows: \n"
+        "'Systems' Identify and list the systems discussed in the article (e.g., two-dimensional, "
+        "compositions, structure, etc.). \n"
+        "'Type' Determine if the article is experimental or theoretical. \n"
+        "'Methods' Extract and list the methods used in the study. \n"
+        "'Main Scope' Summarize the main scope or objective of the article. \n"
+        "'Main Results' Summarize the key findings or main results of the article. \n"
+        "Now, process the provided article content:"
+        ),
+    'prompt_instructions': (
+        "Instructions: \n"
+        "Systems: Look for any mention of systems, whether two-dimensional, three-dimensional, structure, space groups, etc., and list them. \n"
+        "Type: Identify if the study is experimental (involving practical tests, observations, experiments) or theoretical (involving mathematical models, theoretical analysis, simulations). \n"
+        "Methods: Extract any mention of methods, techniques, or procedures used in the study. \n"
+        "Main Scope: Provide a brief summary of the main goal or objective of the study. \n"
+        "Main Results: Provide a concise summary of the main findings or results reported in the article. \n\n"
+        )
+    }
+
+# Template for structuring AI responses
+template = {
+    "Systems": [],
+    "Type": [],
+    "Methods": [],
+    "Main Scope": [],
+    "Main Results": [],
+    "Keywords": []
+    }
 
 class llm_analysis():
 
-    def __init__(self, data, model="llama3.2:1b", api_key = None):
+    def __init__(self, data, model="llama3.2:1b", api_key = None, prompt = prompt, template = template):
         """
         init class
 
@@ -35,7 +65,7 @@ class llm_analysis():
         else:   
             raise ValueError("The current code only suports google germini (genai) or llama3.2:1b, llama3.2:3b, and llama3.1:8b models. Please provide the correct model.")
 
-    def model_interaction(self, title, abstract, tamplate, prompt, content = None, task = "T&A"):
+    def chat_interaction(self, title = None, abstract = None, content = None, task = "T&A"):
 
         """
         Interacts with an LLM model to generate a response based on a provided structure, using a specific prompt structure.
