@@ -2,7 +2,7 @@
 
 # Required packages
 import ollama
-
+import json
 
 # Default prompt for title and abstracts of articles analysis
 prompt = {}
@@ -35,7 +35,7 @@ class llm_analysis():
         else:   
             raise ValueError("The current code only suports google germini (genai) or llama3.2:1b, llama3.2:3b, and llama3.1:8b models. Please provide the correct model.")
 
-    def model_interaction(self, title, abstract, tamplate, prompt, content = None, type = "T&A"):
+    def model_interaction(self, title, abstract, tamplate, prompt, content = None, task = "T&A"):
 
         """
         Interacts with an LLM model to generate a response based on a provided structure, using a specific prompt structure.
@@ -53,10 +53,22 @@ class llm_analysis():
 
         model = self.model_call()
 
-        
+        if task != "T&A":
+            raise ValueError("Currently this code only analyses articles abstracts and titles. Other freatures will come soon!")
 
-
-        return 
+        else: 
+            # Construct the input prompt by combining the header, title, abstract, instructions, and template
+            input_ai = (
+                f"{prompt['prompt_header']} \n"
+                f"Title: {title} \n"
+                f"Abstract: {abstract} \n"
+                f"{prompt['prompt_instructions']} \n"
+                f"Use the following template: {json.dumps(self.template)}."
+                        )
+            
+            return model.chat(model=self.model, 
+                              messages=[{"role": "user", "content": f"{input_ai}"}],
+                             )
 
 
 
