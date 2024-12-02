@@ -3,10 +3,10 @@
 # Required packages
 import ollama
 import json
+import re
 
 # Default prompt for title and abstracts of articles analysis
 prompt = {}
-
 
 class llm_analysis():
 
@@ -70,9 +70,51 @@ class llm_analysis():
                               messages=[{"role": "user", "content": f"{input_ai}"}],
                              )
 
+    def parse_ai_response_json(self, ai_response):
+        """
+        Parse the AI response, identifying and extracting the JSON part according to the predefined template structure.
 
+        Args:
+            ai_response (str): The AI-generated response, which may contain both plain text and a JSON-formatted part.
 
+        Returns:
+            dict: A dictionary containing the parsed content of each section according to the template.
+                Example:
+                {
+                    "Systems": [...],
+                    "Type": "...",
+                    "Methods": [...],
+                    "Main Scope": "...",
+                    "Main Results": "...",
+                    "Keywords": [...]
+                }
+        """
 
+        # Use regex to identify the JSON part in the response
+        json_match = re.search(r'\{.*?\}', ai_response, re.DOTALL)
 
+        if json_match:
+            # Extract the JSON part from the response
+            json_part = json_match.group(0)
+        
+            try:
+                # Convert the JSON string to a dictionary
+                parsed_data = json.loads(json_part)
+                
+                # Ensure that the parsed data matches the expected template format
+                template_keys =  self.template.keys() 
+                
+                result = {key: parsed_data.get(key, []) if isinstance(parsed_data.get(key), list) else parsed_data.get(key, "")
+                        for key in template_keys}
+                
+                return result
+            
+            except json.JSONDecodeError:
+                # Handle case where JSON is malformed or not decodable
+                print("Error decoding JSON part of the AI response.")
+                return None
+        else:
+            print("No JSON part found in the AI response.")
+            return None
     
 
