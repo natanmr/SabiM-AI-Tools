@@ -131,16 +131,19 @@ class LLMAnalysis:
             data_llm = pd.DataFrame(columns=['id', 'BibKey', 'AI-Result', 'AI-Systems', 'AI-Type', 
                                              'AI-Methods', 'AI-Main Scope', 'AI-Main Results', 'AI-Keywords'])
 
-        for col in ['id', 'BibKey', 'AI-Result', 'AI-Systems', 'AI-Type', 'AI-Methods', 'AI-Main Scope', 'AI-Main Results', 'AI-Keywords']:
+        for col in ['id', 'BibKey', 'AI-Result']:
             if col not in data_llm.columns:
                 data_llm[col] = None
 
         for index, row in data.iterrows():
             print(f"Analysing article: {row['id']}")
+
             if task == "remain" and row["id"] in data_llm["id"].values and pd.notna(data_llm.loc[data_llm["id"] == row["id"], "AI-Result"].iloc[0]):
                 continue
 
             ai_result = self.chat_interaction(title=row["title"], abstract=row["abstract"])
+            print(ai_result)
+
             # ai_parsed = self.parse_ai_response_json(ai_result)
 
             new_entry = {**row.to_dict(), "AI-Result": ai_result}
