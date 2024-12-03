@@ -1,42 +1,55 @@
+from sabim_ai_tools.rw import read_bibtex_to_dataframe, json_utilities
+from sabim_ai_tools.llms_ultilities import LLMAnalysis
+import os
 
-from sabim_ai_tools.rw import read_bibtex_to_dataframe
-
-def run_llm_analysis(activity, file_path, model, api_key):
+def run_llm_analysis(activity, file_path, model="llama3.2:1b", api_key=None):
     """
-    Main function for analysis
+    Main function for LLM analysis on bibliographic data.
 
     Args:
-        - activity(str): activity to perform. This argument can have the values "w" for wrinting previous analysis, "a" for 
-            analising all articles in bibfile or "r" for analising the remaining files. 
-        - file_path (str, optional): File with the bibdata. 
-        - model(str, optional): LLM model for using in the analysis. 
-        - api_key(str, optional): api key for germini ai. 
-
+        activity (str): The activity to perform:
+            - "w": Write previous analysis data to JSON.
+            - "a": Analyze all articles in the bibliographic file.
+            - "r": Analyze only the remaining (unanalyzed) files.
+        file_path (str): Path to the bibliographic file (.bib format).
+        model (str, optional): LLM model to use for analysis. Defaults to "llama3.2:1b".
+        api_key (str, optional): API key for models requiring authentication. Defaults to None.
     """
-
-
-    print(  "#===========================================================================#\n"+
-            "# SabiM-AI-Tools  Copyright (C) 2024  Natan Moreira Regis                   #\n"+
-            "# This program comes with ABSOLUTELY NO WARRANTY; for details see LICENSE.  #\n"+
-            "# This is free software, and you are welcome to redistribute it             #\n"+
-            "# under certain conditions; see LICENSE file for details.                   #\n"+
-            "#===========================================================================#\n"
+    print(
+        "#===========================================================================#\n"
+        "# SabiM-AI-Tools  Copyright (C) 2024  Natan Moreira Regis                   #\n"
+        "# This program comes with ABSOLUTELY NO WARRANTY; for details see LICENSE.  #\n"
+        "# This is free software, and you are welcome to redistribute it             #\n"
+        "# under certain conditions; see LICENSE file for details.                   #\n"
+        "#===========================================================================#\n"
     )
 
-    # Call the bibfile
-    print("Reading the bibfile")
-    if ".json" in file_path:
-        raise ValueError("Not implemented yet.")
-    elif ".bib" in file_path:
+    # Step 1: Load the bibliographic file
+    print("Reading the bibliographic file.")
+    if file_path.endswith(".json"):
+        raise ValueError("JSON input not implemented yet.")
+    elif file_path.endswith(".bib"):
         bibcontent = read_bibtex_to_dataframe(file_path)
     else:
-        raise ValueError("Currently the code only suport bibtex files.")
+        raise ValueError("Currently, the code only supports .bib files.")
 
-    # Create a Json with this file. 
-    
+    # Step 2: Ensure a JSON file for results exists
+    json_file_name = "Articles_analysis.json"
+    if not os.path.isfile(json_file_name):
+        print("Creating a new JSON file for analysis results.")
+        json_utilities(task="w", file=json_file_name, data=bibcontent)
 
-    # Analyse the data with LLMs and save them
+    # Step 3: Load or process data based on the activity
+    print("Loading or analyzing data.")
+    task_map = {"a": "all", "r": "remain"}
+    if activity not in task_map:
+        raise ValueError("Invalid activity. Use 'a' for all or 'r' for remaining analysis.")
 
+    task = task_map[activity]
 
-     
-     
+    # Step 4: Perform LLM analysis
+    print("Starting LLM analysis.")
+    analyzer = LLMAnalysis(data=bibcontent, model=model, api_key=api_key)
+    analyzer.llm_analysis(task=task, json_path="./", json_file=json_file_name)
+
+    print("Analysis complete. Results saved to JSON file.")

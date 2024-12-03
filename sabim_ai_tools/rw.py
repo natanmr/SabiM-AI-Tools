@@ -82,7 +82,7 @@ def json_utilities(task, path="./", file="Articles.json", **kwargs):
             The task to perform on the JSON file. Options are:
             - "r": Read the content of the JSON file and return it as a pandas DataFrame.
             - "w": Write the provided DataFrame to the JSON file. Overwrites if the file exists.
-            - "u": Update existing entries in the JSON file with the provided DataFrame. If entries with matching IDs are found, they will be updated.
+            - "u": Update existing entries in the JSON file with the provided DataFrame. If entries with matching ids are found, they will be updated.
             - "a": Append new entries from the provided DataFrame to the JSON file. If the file does not exist, it will be created.
             - any other value: Return the content of the JSON file as a pandas DataFrame.
         
@@ -126,9 +126,9 @@ def json_utilities(task, path="./", file="Articles.json", **kwargs):
         with open(file_path, 'r') as f:
             existing_data = pd.DataFrame(json.load(f))
 
-        # Set the index to 'ID' and combine the DataFrames
-        existing_data.set_index('ID', inplace=True)
-        data.set_index('ID', inplace=True)
+        # Set the index to 'id' and combine the DataFrames
+        existing_data.set_index('id', inplace=True)
+        data.set_index('id', inplace=True)
 
         # Update existing data with new data
         updated_data = existing_data.combine_first(data).reset_index()
