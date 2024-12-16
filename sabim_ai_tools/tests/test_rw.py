@@ -7,22 +7,43 @@ E-mail: natan.moreira.regis12@gmail.com
 Licence: GPLv3 
 """
 
+import os
+import pandas as pd
+
+from sabim_ai_tools.rw import openfile
+
 def test_rw_openfile() -> None:
     """
-    Test openfile function from rw module
+    Test the `openfile` function from the `rw` module.
     """
-    from rw import openfile
+    # Caminho relativo para o arquivo de teste
+    test_file_path = "sabim_ai_tools/tests/data/refs.bib"
 
-    try:
-        openfile("./data/refs.bib")
-    except:
-        raise Exception("The function openfile from rw module return an error.")
+    # Verifica se o arquivo existe antes do teste
+    assert os.path.exists(test_file_path), f"Test file {test_file_path} does not exist."
 
+    # Testa a função `openfile`
+    content = openfile(test_file_path)
+    assert content is not None, "The function `openfile` returned None."
+    assert isinstance(content, str), "The function `openfile` should return a string."
 
     return None
 
+from sabim_ai_tools.rw import read_bibtex_to_dataframe
 
-if __name__=="__main__":
 
-    print("Testing rw.openfile")
-    test_rw_openfile()
+def test_rw_read_bibtex_to_dataframe() -> None:
+
+    # Caminho relativo para o arquivo de teste
+    test_file_path = "sabim_ai_tools/tests/data/refs.bib"
+
+    # Verifica se o arquivo existe antes do teste
+    assert os.path.exists(test_file_path), f"Test file {test_file_path} does not exist."
+
+    content = read_bibtex_to_dataframe(test_file_path)
+
+    assert content is not None, "The function `read_bibtex_to_dataframe` returned None."
+
+    assert isinstance(content, pd.DataFrame), "The function `read_bibtex_to_dataframe` should return a pandas dataframe." 
+
+    return None
