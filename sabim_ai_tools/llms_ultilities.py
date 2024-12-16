@@ -1,4 +1,4 @@
-from sabim_ai_tools.rw import json_utilities
+from sabim_ai_tools.rw import JSONUtilities
 import pandas as pd
 import ollama
 import json

@@ -1,7 +1,7 @@
 # sabim_ai_tools.py
 
 # Call required modules
-from sabim_ai_tools.rw import read_bibtex_to_dataframe, json_utilities
+from sabim_ai_tools.rw import read_bibtex_to_dataframe, JSONUtilities
 from sabim_ai_tools.llms_ultilities import LLMAnalysis
 import os
 
