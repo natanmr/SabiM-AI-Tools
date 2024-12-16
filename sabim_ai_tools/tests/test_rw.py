@@ -33,6 +33,7 @@ from sabim_ai_tools.rw import read_bibtex_to_dataframe
 
 
 def test_rw_read_bibtex_to_dataframe() -> None:
+    """ Test the `read_bibtex_to_dataframe` function from the `rw` module. """
 
     # Caminho relativo para o arquivo de teste
     test_file_path = "sabim_ai_tools/tests/data/refs.bib"
@@ -47,3 +48,4 @@ def test_rw_read_bibtex_to_dataframe() -> None:
     assert isinstance(content, pd.DataFrame), "The function `read_bibtex_to_dataframe` should return a pandas dataframe." 
 
     return None
+

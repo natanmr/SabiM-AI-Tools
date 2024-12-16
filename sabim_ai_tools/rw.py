@@ -70,60 +70,73 @@ def read_bibtex_to_dataframe(path_file):
     return pd.DataFrame(entries)
 
 
-def json_utilities(task, path="./", file="Articles.json", **kwargs):
+class JSONUtilities:
     """
-    Perform various operations on a JSON file using a pandas DataFrame.
-
-    Args:
-        - task : str
-            The task to perform on the JSON file. Options are:
-            - "r": Read the content of the JSON file and return it as a pandas DataFrame.
-            - "w": Write the provided DataFrame to the JSON file. Overwrites if the file exists.
-            - "u": Update existing entries in the JSON file with the provided DataFrame. If entries with matching ids are found, they will be updated.
-            - "a": Append new entries from the provided DataFrame to the JSON file. If the file does not exist, it will be created.
-            - any other value: Return the content of the JSON file as a pandas DataFrame.
-        
-        **kwargs : dict
-            Additional keyword arguments. Must include:
-                - data (pandas.DataFrame, optional): The DataFrame to write, update, or append. Required for tasks "w", "u", and "a".
-        
-    Returns:
-        - pandas.DataFrame: If task is "r" or any other non-recognized value, returns the content of the JSON file as a DataFrame.
-        
-    Raises:
-        - ValueError: If the `data` is not a DataFrame where required.
-        - FileNotFoundError: If the file does not exist for tasks "r" or "u".
+    A class to perform various operations on a JSON file using a pandas DataFrame.
     """
 
-    data = kwargs.get('data')
+    def __init__(self, path="./", file="Articles.json"):
+        """
+        Initialize the JSONUtilities instance.
 
-    file_path = f"{path}{file}"
+        Args:
+            path (str): Directory path where the JSON file is located or will be created. Default is "./".
+            file (str): Name of the JSON file. Default is "Articles.json".
+        """
+        self.file_path = os.path.join(path, file)
 
-    # Task: Read JSON into DataFrame
-    if task == "r":
-        if not os.path.exists(file_path):
-            raise FileNotFoundError(f"No such file: '{file_path}'")
-        with open(file_path, 'r') as f:
+    def read(self):
+        """
+        Read the content of the JSON file and return it as a pandas DataFrame.
+
+        Returns:
+            pandas.DataFrame: The content of the JSON file as a DataFrame.
+
+        Raises:
+            FileNotFoundError: If the file does not exist.
+        """
+        if not os.path.exists(self.file_path):
+            raise FileNotFoundError(f"No such file: '{self.file_path}'")
+
+        with open(self.file_path, 'r') as f:
             content = json.load(f)
         return pd.DataFrame(content)
 
-    # Task: Write DataFrame to JSON (overwrite if exists)
-    elif task == "w":
+    def write(self, data):
+        """
+        Write the provided DataFrame to the JSON file. Overwrites the file if it exists.
+
+        Args:
+            data (pandas.DataFrame): The DataFrame to write to the JSON file.
+
+        Raises:
+            ValueError: If the provided data is not a pandas DataFrame.
+        """
         if not isinstance(data, pd.DataFrame):
             raise ValueError("Data must be a pandas DataFrame.")
-        data.to_json(file_path, orient='records', indent=4)
 
-    # Task: Update existing JSON with modifications from DataFrame
-    elif task == "u":
+        data.to_json(self.file_path, orient='records', indent=4)
+
+    def update(self, data):
+        """
+        Update existing entries in the JSON file with the provided DataFrame.
+
+        Args:
+            data (pandas.DataFrame): The DataFrame containing updates. Must include an 'id' column.
+
+        Raises:
+            ValueError: If the provided data is not a pandas DataFrame.
+            FileNotFoundError: If the file does not exist.
+        """
         if not isinstance(data, pd.DataFrame):
             raise ValueError("Data must be a pandas DataFrame.")
-        if not os.path.exists(file_path):
-            raise FileNotFoundError(f"No such file: '{file_path}'")
+        if not os.path.exists(self.file_path):
+            raise FileNotFoundError(f"No such file: '{self.file_path}'")
 
-        with open(file_path, 'r') as f:
+        with open(self.file_path, 'r') as f:
             existing_data = pd.DataFrame(json.load(f))
 
-        # Set the index to 'id' and combine the DataFrames
+        # Ensure 'id' is the index for combining
         existing_data.set_index('id', inplace=True)
         data.set_index('id', inplace=True)
 
@@ -131,28 +144,26 @@ def json_utilities(task, path="./", file="Articles.json", **kwargs):
         updated_data = existing_data.combine_first(data).reset_index()
 
         # Write updated data back to JSON
-        updated_data.to_json(file_path, orient='records', indent=4)
+        updated_data.to_json(self.file_path, orient='records', indent=4)
 
-    # Task: Append new entries to JSON
-    elif task == "a":
+    def append(self, data):
+        """
+        Append new entries from the provided DataFrame to the JSON file. If the file does not exist, it will be created.
+
+        Args:
+            data (pandas.DataFrame): The DataFrame to append to the JSON file.
+
+        Raises:
+            ValueError: If the provided data is not a pandas DataFrame.
+        """
         if not isinstance(data, pd.DataFrame):
             raise ValueError("Data must be a pandas DataFrame.")
 
-        if os.path.exists(file_path):
-            with open(file_path, 'r') as f:
+        if os.path.exists(self.file_path):
+            with open(self.file_path, 'r') as f:
                 existing_data = pd.DataFrame(json.load(f))
             combined_data = pd.concat([existing_data, data], ignore_index=True)
         else:
             combined_data = data
-        
-        combined_data.to_json(file_path, orient='records', indent=4)
 
-    # Task: Return the content of the JSON file as a DataFrame
-    else:
-        if not os.path.exists(file_path):
-            raise FileNotFoundError(f"No such file: '{file_path}'")
-        with open(file_path, 'r') as f:
-            content = json.load(f)
-        return pd.DataFrame(content)
-    
-    return
+        combined_data.to_json(self.file_path, orient='records', indent=4)
