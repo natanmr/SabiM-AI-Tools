@@ -1,6 +1,6 @@
 # Article Analyzer with LLMs
 
-A Python-based project for analyzing and extracting insights from article metadata and content using Large Language Models (LLMs). This tool simplifies tasks like summarization, keyword extraction, sentiment analysis, and topic categorization for academic or professional articles.
+A Python-based project for analyzing and extracting insights from article metadata and content using Large Language Models (LLMs). This tool simplifies tasks like summarization, keyword extraction, and topic categorization for academic or professional articles.
 
 ---
 
@@ -17,45 +17,46 @@ A Python-based project for analyzing and extracting insights from article metada
 
 ## Requirements
 
-- Python 3.8 or higher
-- OpenAI API key (or any other LLM API key supported in the project)
-- Basic understanding of Python for customization
+- Python 3.7 or higher
+- For local runing using llama model, its needed to install and setup ollama in your computer. It's highly recommended to use docker containers. For linux-based systems, you can follow these insructions: 
+   - Install docker: [https://docs.docker.com/desktop/setup/install/linux/](https://docs.docker.com/desktop/setup/install/linux/).
+
+   - Install ollama in docker: [https://hub.docker.com/r/ollama/ollama](https://hub.docker.com/r/ollama/ollama).
+   - A list of other requeriments is given in requirements.txt file. 
 
 ---
 
 ## Installation
 
-1. Clone the repository:
+The instructions for install in Linux environments is as follow: 
 
-   ```bash
-   git clone https://github.com/yourusername/article-analyzer-llms.git
-   cd article-analyzer-llms
-   ```
-
-2. Create a virtual environment and activate it:
+1. Create a virtual environment and activate it:
 
    ```bash
    python -m venv env
    source env/bin/activate  # On Windows: env\Scripts\activate
    ```
 
-3. Install the dependencies:
+
+2. Clone the repository:
 
    ```bash
-   pip install -r requirements.txt
+   git clone https://github.com/natanmr/SabiM-AI-Tools.git
+   cd SabiM-AI-Tools
    ```
 
-4. Set up your API key for the LLM provider (e.g., OpenAI). Add it to a `.env` file:
+3. Install the package:
 
-   ```env
-   OPENAI_API_KEY=your_api_key_here
+   ```
+   pip install .
    ```
 
 ---
 
 ## Usage
 
-1. Prepare your articles as text files in the `data/` directory or provide a link to access them.
+1. Prepare your articles as text files. Currenly the code only suport bibtex files. 
+
 2. Run the program:
 
    ```bash
@@ -63,10 +64,6 @@ A Python-based project for analyzing and extracting insights from article metada
    ```
 
 3. Choose the analysis type when prompted:
-   - `1`: Summarize Articles
-   - `2`: Extract Keywords
-   - `3`: Perform Sentiment Analysis
-   - `4`: Categorize Articles
 
 4. View the results in the terminal or exported files in the `output/` directory.
 
