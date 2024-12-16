@@ -19,9 +19,6 @@ def openfile(path_file):
         - FileNotFoundError: If the file does not exist.
         - IOError: If there's an issue reading the file.
     """
-    if not os.path.exists(path_file):
-        raise FileNotFoundError(f"File '{path_file}' not found.")
-    
     try:
         with open(path_file, 'r', encoding="utf-8") as f:
             return f.read()

@@ -1,3 +1,6 @@
+# sabim_ai_tools.py
+
+# Call required modules
 from sabim_ai_tools.rw import read_bibtex_to_dataframe, json_utilities
 from sabim_ai_tools.llms_ultilities import LLMAnalysis
 import os
@@ -24,11 +27,8 @@ def run_llm_analysis(activity, file_path, model="llama3.2:1b", api_key=None):
         "#===========================================================================#\n"
     )
 
-    # Step 1: Load the bibliographic file
     print("Reading the bibliographic file.")
-    if file_path.endswith(".json"):
-        raise ValueError("JSON input not implemented yet.")
-    elif file_path.endswith(".bib"):
+    if file_path.endswith(".bib"):
         bibcontent = read_bibtex_to_dataframe(file_path)
     else:
         raise ValueError("Currently, the code only supports .bib files.")
