@@ -8,7 +8,6 @@ Licence: GPLv3
 """
 
 import os
-import pytest
 from sabim_ai_tools.rw import openfile
 
 def test_rw_openfile():
