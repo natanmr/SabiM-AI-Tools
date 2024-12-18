@@ -11,6 +11,9 @@ import os
 import pandas as pd
 
 from sabim_ai_tools.rw import openfile
+from sabim_ai_tools.rw import JSONUtilities
+from sabim_ai_tools.rw import DBUtilities
+from sabim_ai_tools.rw import read_bibtex_to_dataframe
 
 def test_rw_openfile() -> None:
     """
@@ -29,9 +32,6 @@ def test_rw_openfile() -> None:
 
     return None
 
-from sabim_ai_tools.rw import read_bibtex_to_dataframe
-
-
 def test_rw_read_bibtex_to_dataframe() -> None:
     """ Test the `read_bibtex_to_dataframe` function from the `rw` module. """
 
@@ -48,8 +48,6 @@ def test_rw_read_bibtex_to_dataframe() -> None:
     assert isinstance(content, pd.DataFrame), "The function `read_bibtex_to_dataframe` should return a pandas dataframe." 
 
     return None
-
-from sabim_ai_tools.rw import JSONUtilities
 
 def test_JSONUtilities():
     """
@@ -107,3 +105,14 @@ def test_JSONUtilities():
     # Clean up test file
     if os.path.exists(test_file_path):
         os.remove(test_file_path)
+
+def test_DBUtilities():
+
+    # Initiate the instance:
+    db = DBUtilities()
+
+    # Create a database for testing using the example bibtex
+    
+
+
+    return
