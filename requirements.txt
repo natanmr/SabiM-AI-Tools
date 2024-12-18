@@ -2,4 +2,5 @@ pandas
 pybtex
 ollama 
 google-generativeai 
+setuptools
 pytest

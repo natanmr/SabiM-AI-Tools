@@ -50,7 +50,7 @@ def read_bibtex_to_dataframe(path_file):
         # Parse the BibTeX content
         bib_database = parse_string(bibtex_content, "bibtex")
     except Exception as e:
-        raise ValueError(f"Error parsing BibTeX file: {e}")
+        raise ValueError(f'Error parsing BibTeX file: {e}') from e
     
     # Extract BibTeX entries into a list of dictionaries
     entries = []

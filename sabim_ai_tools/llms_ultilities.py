@@ -109,7 +109,7 @@ class LLMAnalysis:
         print("No JSON found in AI response.")
         return None
 
-    def llm_analysis(self, data = [], task="remain", json_path="./", json_file="Articles_llm.json"):
+    def llm_analysis(self, data, task="remain", json_path="./", json_file="Articles_llm.json"):
         """
         Perform LLM analysis and update results in a JSON file.
 
