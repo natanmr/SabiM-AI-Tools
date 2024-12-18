@@ -1,8 +1,8 @@
 # sabim_ai_tools/rag.py
 
-import ollama
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from sabim_ai_tools.models import Models
 
 class RAG:
     """ 
@@ -19,7 +19,7 @@ class RAG:
         vectorizer (TfidfVectorizer): TF-IDF vectorizer for text retrieval.
     """
 
-    def __init__(self, data, column="abstract"):
+    def __init__(self, model, data, api_key = None, column="abstract"):
         """
         Initializes the RAG model with the given data and column.
 
@@ -29,9 +29,11 @@ class RAG:
         """
         self.data = data
         self.column = column
+        self.model = model 
+        self.api_key = api_key
 
         # Initialize the Ollama model for text generation.
-        self.model = ollama.Model("llama2")  # Ensure 'llama2' is the correct model identifier.
+        self.llm_model = Models(model = self.model, api_key=self.api_key).model_call()  
         
         # Initialize the TF-IDF vectorizer for document retrieval.
         self.vectorizer = TfidfVectorizer()

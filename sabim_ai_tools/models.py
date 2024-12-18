@@ -2,11 +2,9 @@
 import ollama
 
 class Models:
-    def __init__(self, model, prompt, api_key=None, context = None):
+    def __init__(self, model, api_key=None):
         self.model = model
-        self.prompt = prompt
         self.api_key = api_key
-        self.context = context
         
 
     def model_call(self):

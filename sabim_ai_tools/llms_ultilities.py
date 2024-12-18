@@ -1,8 +1,10 @@
-from sabim_ai_tools.rw import JSONUtilities
+import re
 import pandas as pd
 import ollama
 import json
-import re
+
+from sabim_ai_tools.rw import JSONUtilities
+
 
 
 class LLMAnalysis:
