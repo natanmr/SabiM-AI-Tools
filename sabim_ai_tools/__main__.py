@@ -16,7 +16,7 @@ if __name__ == "__main__":
     # Add argument for specifying the LLM model type (optional, default is model_type_default)
     parser.add_argument('-m', '--model_type', 
                         help="LLM model (genai or llama3).",
-                        default="llama3:8b",
+                        default="llama3.1:8b",
                         type=str,
                         required=False)  # Large Language Model (Optional)
 

@@ -2,11 +2,11 @@ from sabim_ai_tools.rw import read_bibtex_to_dataframe, json_utilities
 from sabim_ai_tools.llms_ultilities import LLMAnalysis
 import os
 
-def run_llm_analysis(activity, file_path, model="llama3.2:1b", api_key=None):
+def run_llm_analysis(activity, file_path, model="llama3.1:8b", api_key=None):
     """
-    Main function for LLM analysis on bibliographic data.
+    LLM analysis on bibliographic data.
 
-    Args:
+    Arguments:
         activity (str): The activity to perform:
             - "w": Write previous analysis data to JSON.
             - "a": Analyze all articles in the bibliographic file.
@@ -14,6 +14,8 @@ def run_llm_analysis(activity, file_path, model="llama3.2:1b", api_key=None):
         file_path (str): Path to the bibliographic file (.bib format).
         model (str, optional): LLM model to use for analysis. Defaults to "llama3.2:1b".
         api_key (str, optional): API key for models requiring authentication. Defaults to None.
+    Returns: 
+        - none
     """
     print(
         "#===========================================================================#\n"
@@ -25,7 +27,7 @@ def run_llm_analysis(activity, file_path, model="llama3.2:1b", api_key=None):
     )
 
     # Step 1: Load the bibliographic file
-    print("Reading the bibliographic file.")
+    print(f"Reading the bibliographic file {file_path}")
     if file_path.endswith(".json"):
         raise ValueError("JSON input not implemented yet.")
     elif file_path.endswith(".bib"):
