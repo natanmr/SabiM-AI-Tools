@@ -2,7 +2,7 @@
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from sabim_ai_tools.models import Models
+from sabim_ai_tools.llm.models import Models
 
 class RAG:
     """ 

@@ -3,7 +3,7 @@ import pandas as pd
 import ollama
 import json
 
-from sabim_ai_tools.rw import JSONUtilities
+from sabim_ai_tools.io.rw import JSONUtilities
 
 
 
